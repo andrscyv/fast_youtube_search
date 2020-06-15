@@ -1,0 +1,22 @@
+Metadata-Version: 2.1
+Name: fast-youtube-search
+Version: 0.0.1
+Summary: Unlimited youtube search with web scrapping
+Home-page: https://github.com/andrscyv/fast_youtube_search
+Author: Andres Cruz y Vera
+Author-email: andrscyv@gmail.com
+License: UNKNOWN
+Description: # Fast Youtube Search
+        
+        This is a simple library that allows you to search videos on Youtube.
+        
+        It is fast because it doesn't use selenium. It scrapes data directly from
+        the html of the results page. 
+        
+        For each video it returns the name, id , and the thumbnail's url.
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
