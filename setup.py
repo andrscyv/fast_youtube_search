@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="fast_youtube_search", # Replace with your own username
-    version="0.0.5",
+    version="0.0.6",
     author="Andres Cruz y Vera",
     author_email="andrscyv@gmail.com",
     description="Unlimited youtube search with web scrapping",
