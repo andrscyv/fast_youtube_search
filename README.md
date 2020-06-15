@@ -34,6 +34,6 @@ results = search_youtube(['jorja', 'smith'], retries = 7, max_num_results = 2)
 ```
 # Retries
 
-Youtube sometimes returns html without a list of results. Sometimes it is necessary 
-to retry a couple of times. After testing, empty results after 3 retries is unlikely 
+Youtube sometimes returns html without a list of results. It is necessary 
+to retry a couple of times. Empty results after 3 retries is unlikely 
 (retries = 4 is the default value)
