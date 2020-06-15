@@ -10,11 +10,12 @@ logger_chardet = logging.getLogger('chardet.charsetprober')
 logger_chardet.setLevel(logging.INFO)
 
 def extractData( el ):
-    if el.a and el.img and el.div and ('yt-lockup-video' in el.div['class']) and el.h3 and el.h3.a and ('https' in el.img['src']):
+    if el.a and el.div and ('yt-lockup-video' in el.div['class']) and el.h3 and el.h3.a:
+        video_id = el.a['href'].split('=')[1]
         return {
             'name': el.h3.a.text,
-            'id': el.a['href'].split('=')[1],
-            'img': el.img['src']
+            'id': video_id,
+            'img': 'https://i.ytimg.com/vi/' + video_id + '/hqdefault.jpg'
         }
 
 def get_html( transformed_query ):
@@ -24,7 +25,7 @@ def get_html( transformed_query ):
     headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246'}
     return requests.get(URL, headers = headers, timeout = 5)
 
-def searchYoutube(query, retries = 3):
+def searchYoutube(query, retries = 3, max_num_results = -1):
     """ Unlimited youtube search by web scrapping """
     transformed_query = reduce(lambda s_ant, s_sig : s_ant + '+' + s_sig, query) if len(query) != 0 else ''
     scrapped_data = []
@@ -41,7 +42,8 @@ def searchYoutube(query, retries = 3):
         raise Exception(" Html without list of results ")
     items = item_list.find_all('li')
     scrapped_data = [x for x in map(extractData, items) if x is not None]
-    return scrapped_data
+    return scrapped_data if max_num_results <= 0 else scrapped_data[:max_num_results]
+
 
 
 
@@ -50,5 +52,5 @@ if __name__ == "__main__":
     query = sys.argv[1:]
     scrapped_data = searchYoutube(query)
     json_response = json.dumps(scrapped_data)
-    json = json.dumps(scrapped_data, indent=2) 
+    json = json.dumps(scrapped_data, indent=2)
     print(json)
