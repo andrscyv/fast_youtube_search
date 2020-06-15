@@ -1,8 +1,0 @@
-README.md
-setup.py
-fast_youtube_search/__init__.py
-fast_youtube_search/search.py
-fast_youtube_search.egg-info/PKG-INFO
-fast_youtube_search.egg-info/SOURCES.txt
-fast_youtube_search.egg-info/dependency_links.txt
-fast_youtube_search.egg-info/top_level.txt
