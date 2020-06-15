@@ -8,7 +8,7 @@ the html of the results page.
 For each video it returns the name, id , and the thumbnail's url.
 # Install 
 ```bash
-pip install fast_youtube_search
+pip install fast-youtube-search
 ```
 # Usage
 
