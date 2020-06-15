@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="fast_youtube_search", # Replace with your own username
-    version="0.0.1",
+    version="0.0.4",
     author="Andres Cruz y Vera",
     author_email="andrscyv@gmail.com",
     description="Unlimited youtube search with web scrapping",
@@ -19,4 +19,8 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    install_requires= [
+        'requests',
+        'bs4'
+    ]
 )

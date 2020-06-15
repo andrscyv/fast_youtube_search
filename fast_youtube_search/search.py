@@ -25,7 +25,7 @@ def get_html( transformed_query ):
     headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246'}
     return requests.get(URL, headers = headers, timeout = 5)
 
-def search_youtube(query, retries = 3, max_num_results = -1):
+def search_youtube(query, retries = 4, max_num_results = -1):
     """ Unlimited youtube search by web scrapping """
     transformed_query = reduce(lambda s_ant, s_sig : s_ant + '+' + s_sig, query) if len(query) != 0 else ''
     scrapped_data = []
