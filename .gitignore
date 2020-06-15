@@ -1,3 +1,4 @@
 build/
 dist/
 fast_youtube_search.egg-info/
+fast_youtube_search/__pycache__
