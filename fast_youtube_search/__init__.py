@@ -1,1 +1,1 @@
-from fast_youtube_search.search import search_youtube
+from fast_youtube_search.search_alt import search_youtube
