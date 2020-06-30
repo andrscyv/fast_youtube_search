@@ -2,8 +2,7 @@
 
 This is a simple library that allows you to search videos on Youtube.
 
-It is fast because it doesn't use selenium. It scrapes data directly from
-the html of the results page. 
+It is fast because it doesn't use selenium.
 
 For each video it returns the name, id , and the thumbnail's url.
 # Install 
@@ -28,12 +27,6 @@ pip install fast-youtube-search
 #  }
 
 #Optional arguments
-# retries : the max number of retries for requesting the results page (see below)
 # max_num_results : max number of results that the function returns
-results = search_youtube(['jorja', 'smith'], retries = 7, max_num_results = 2)
+results = search_youtube(['jorja', 'smith'], max_num_results = 2)
 ```
-# Retries
-
-Youtube sometimes returns html without a list of results. It is necessary 
-to retry a couple of times. Empty results after 3 retries is unlikely 
-(retries = 4 is the default value)
