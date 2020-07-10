@@ -2,38 +2,17 @@ import requests
 import sys
 import json
 from functools import reduce
-from bs4 import BeautifulSoup
 import logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logger_chardet = logging.getLogger('chardet.charsetprober')
 logger_chardet.setLevel(logging.INFO)
 
-def extract_data( el ):
-    if el.a and el.div and ('yt-lockup-video' in el.div['class']) and el.h3 and el.h3.a:
-        video_id = el.a['href'].split('=')[1]
-        return {
-            'name': el.h3.a.text,
-            'id': video_id,
-            'img': 'https://i.ytimg.com/vi/' + video_id + '/hqdefault.jpg'
-        }
-
-def get_html( transformed_query ):
-    BASE_URL = 'https://www.youtube.com/results?search_query='
-    URL = BASE_URL + transformed_query
-    logger.info(f"Requesting : {URL}")
-    headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246'}
-    return requests.get(URL, headers = headers, timeout = 5)
-
-def search_youtube(query, retries = 4, max_num_results = -1):
-    """ Unlimited youtube search by web scrapping """
-    data = call_api(query)    
-    return data if max_num_results <= 0 else data[:max_num_results]
 
 def transform_query(query):
     return reduce(lambda s_ant, s_sig : s_ant + '+' + s_sig, query) if len(query) != 0 else ''
 
-def call_api(query):
+def search_youtube(query):
     BASE_URL = 'https://www.youtube.com/results?search_query='
     URL = BASE_URL + transform_query(query) + '&pbj=1'
     logger.info(f"Requesting : {URL}")
@@ -55,10 +34,25 @@ def call_api(query):
      'accept-language': 'en-US,en;q=0.9,es;q=0.8' ,
     }
     response = requests.get(URL, headers = headers, timeout = 5).json()
-    results  = response[1]['response']['contents']['twoColumnSearchResultsRenderer']['primaryContents']['sectionListRenderer']['contents'][0]['itemSectionRenderer']['contents']
+    sections = response[1]['response']['contents']['twoColumnSearchResultsRenderer']['primaryContents']['sectionListRenderer']['contents']
+    results = find_video_renderer(sections)
     results = [ extract_data_api(video) for video in results ]
     results = [r for r in results if r is not None ]
     return results
+
+def find_video_renderer(contents):
+    for item_section in contents:
+        section_renderer = item_section['itemSectionRenderer']
+        if exists_video_renderer_in(section_renderer['contents']):
+           return section_renderer['contents']
+
+    return None
+
+def exists_video_renderer_in(contents_list):
+    for item in contents_list:
+        if 'videoRenderer' in item:
+            return True
+    return False
 
 def extract_data_api(video)  :
     if 'videoRenderer' not in video:
